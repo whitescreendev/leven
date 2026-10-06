@@ -104,6 +104,19 @@ closestMatch('abcdef', ['123456', '1234567890'], {maxDistance: 2});
 //=> undefined
 ```
 
+
+## Unicode behavior
+
+JavaScript strings are represented as UTF-16, and this implementation calculates the distance over UTF-16 code units by using string lengths and `charCodeAt()`.
+
+Characters outside the Basic Multilingual Plane can therefore occupy two code units, while a single user-perceived character can also consist of multiple code points or code units.
+
+Canonically equivalent strings may have different underlying sequences. If canonical equivalence matters, normalize both inputs to the same Unicode normalization form before calculating the distance.
+
+This implementation does not perform grapheme-cluster segmentation. Applications that require one user-perceived character to count as one edit should use a grapheme-aware comparison strategy.
+
+For additional background on Unicode normalization, grapheme segmentation, and text transformations in edit-distance processing, see [Unicode text transformations and edit distance](https://www.levenshtein.net/unicode-text-transformations).
+
 ## Related
 
 - [leven-cli](https://github.com/sindresorhus/leven-cli) - CLI for this module
